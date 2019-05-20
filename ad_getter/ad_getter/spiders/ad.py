@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import html2text
+import requests
 
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -23,7 +24,7 @@ class AdSpider(CrawlSpider):
 
         for link in links:
             if link.url not in self.all_urls:
-                urls.append({'url': link.url, 'description': self.handler.handle(response.body.decode())})
+                urls.append({'url': link.url, 'description': self.handler.handle(requests.get(link.url).text)})
 
         for url in urls:
             self.all_urls.add(url['url'])
