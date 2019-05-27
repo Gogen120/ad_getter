@@ -7,13 +7,13 @@ from scrapy.http.response.html import HtmlResponse
 from scrapy.exceptions import NotSupported
 
 TAG_FIELD_MAP = {
-    '*': '@value',
+    'input': '@value',
     'span': 'text()',
     'a': 'text()',
     'button': 'text()'
 }
 
-CHARS_TO_TRANSLATE = 'КВ'
+CHARS_TO_TRANSLATE = 'КВО'  # for case insensitive search
 
 
 def is_page_contains_keyword(response: HtmlResponse, keyword: str) -> bool:
@@ -21,7 +21,7 @@ def is_page_contains_keyword(response: HtmlResponse, keyword: str) -> bool:
     for tag, field in TAG_FIELD_MAP.items():
         try:
             if response.xpath(
-                f'//{tag}[contains(translate({field}, "{CHARS_TO_TRANSLATE}", "{CHARS_TO_TRANSLATE.lower()}"), "{keyword}")]'
+                f'//{tag}[(translate({field}, "{CHARS_TO_TRANSLATE}", "{CHARS_TO_TRANSLATE.lower()}") = "{keyword}")]'
             ).getall():
                 return True
         except NotSupported:
@@ -33,7 +33,8 @@ def is_page_contains_keyword(response: HtmlResponse, keyword: str) -> bool:
 def is_product_page(response: HtmlResponse) -> bool:
     """Check if page contains any of possible product page keywords"""
     return is_page_contains_keyword(response, 'купить') or \
-        is_page_contains_keyword(response, 'в корзину')
+        is_page_contains_keyword(response, 'в корзину') or \
+        is_page_contains_keyword(response, 'оформить заказ')
 
 
 class AdSpider(CrawlSpider):
