@@ -1,3 +1,5 @@
+import ad_getter.spiders.constants as const
+
 from scrapy.exceptions import NotSupported
 from scrapy.http.response.html import HtmlResponse
 
@@ -17,7 +19,7 @@ def extract_matched_tags_values(response: HtmlResponse, tags: dict) -> list:
     ]
 
 
-def is_product_page(response: HtmlResponse, tags: dict, keywords: tuple) -> bool:
+def page_has_keywords(response: HtmlResponse, tags: dict, keywords: tuple) -> bool:
     """Check if page contains any of possible product page keywords"""
     try:
         matched_values = extract_matched_tags_values(response, tags)
@@ -29,3 +31,14 @@ def is_product_page(response: HtmlResponse, tags: dict, keywords: tuple) -> bool
             return True
 
     return False
+
+
+def page_contains_buy_tags(response: HtmlResponse) -> bool:
+    return page_has_keywords(response, const.BUY_TAGS, const.BUY_KEYWORDS) or \
+        page_has_keywords(response, const.NOT_IN_SHOP_TAGS, const.NOT_IN_SHOP_KEYWORDS)
+
+
+def page_contains_description_tags(response: HtmlResponse) -> bool:
+    return page_has_keywords(response, const.SIMILAR_PRODUCT_TAGS, const.SIMILAR_PRODUCT_KEYWORDS) or \
+        page_has_keywords(response, const.DESCRIPTION_TAGS, const.DESCRIPTION_KEYWORDS) or \
+        page_has_keywords(response, const.REVIEW_TAGS, const.REVIEW_KEYWORDS)

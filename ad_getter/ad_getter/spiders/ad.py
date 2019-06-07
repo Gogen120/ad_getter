@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
-import scrapy
-
-import ad_getter.spiders.constants as const
-
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-from ad_getter.spiders.utils import is_product_page
+from ad_getter.spiders.utils import page_contains_buy_tags, page_contains_description_tags
 
 
 class AdSpider(CrawlSpider):
@@ -36,10 +32,5 @@ class AdSpider(CrawlSpider):
         super().__init__(*args, **kwargs)
 
     def parse_item(self, response):
-        if (is_product_page(response, const.BUY_TAGS, const.BUY_KEYWORDS) or
-            is_product_page(response, const.NOT_IN_SHOP_TAGS, const.NOT_IN_SHOP_KEYWORDS)) and (
-            is_product_page(response, const.SIMILAR_PRODUCT_TAGS, const.SIMILAR_PRODUCT_KEYWORDS) or
-            is_product_page(response, const.DESCRIPTION_TAGS, const.DESCRIPTION_KEYWORDS) or
-            is_product_page(response, const.REVIEW_TAGS, const.REVIEW_KEYWORDS)
-        ):
+        if page_contains_buy_tags(response) and page_contains_description_tags(response):
             return {'url': response.url}
