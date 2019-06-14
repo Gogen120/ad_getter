@@ -34,11 +34,17 @@ def page_has_keywords(response: HtmlResponse, tags: dict, keywords: tuple) -> bo
 
 
 def page_contains_buy_tags(response: HtmlResponse) -> bool:
+    if '?' in response.url:
+        return False
+
     return page_has_keywords(response, const.BUY_TAGS, const.BUY_KEYWORDS) or \
         page_has_keywords(response, const.NOT_IN_SHOP_TAGS, const.NOT_IN_SHOP_KEYWORDS)
 
 
 def page_contains_description_tags(response: HtmlResponse) -> bool:
+    if '?' in response.url:
+        return False
+
     return page_has_keywords(response, const.SIMILAR_PRODUCT_TAGS, const.SIMILAR_PRODUCT_KEYWORDS) or \
         page_has_keywords(response, const.DESCRIPTION_TAGS, const.DESCRIPTION_KEYWORDS) or \
         page_has_keywords(response, const.REVIEW_TAGS, const.REVIEW_KEYWORDS)

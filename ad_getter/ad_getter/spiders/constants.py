@@ -58,3 +58,6 @@ NOT_IN_SHOP_KEYWORDS = (
     'изделие отсутствует'
 )
 REVIEW_KEYWORDS = ('написать отзыв', 'добавить отзыв', 'оставить отзыв')
+
+PRODUCT_ROUTES = '(collection|product|catalog|sankt-peterburg|shiny|diski|shop|store)'
+EXTRA_ROUTES = '(/[\w\-%\=\.]+/?)+'

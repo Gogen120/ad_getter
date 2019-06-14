@@ -21,7 +21,7 @@ class AdSpider(CrawlSpider):
             Rule(
                 LinkExtractor(
                     allow=[r"{}".format(self.start_urls[0])],
-                    deny=[r"compare", r"/tel:", r"\.php", r"/?arfilter", r"/?arsort"],
+                    deny=[r"compare", r"/tel:", r"\.php"],
                     unique=True,
                 ),
                 callback='parse_item',
