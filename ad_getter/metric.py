@@ -20,7 +20,7 @@ def get_product_pages_counter(urls: list, domain: str) -> dict:
     product_page_counter = {}
     for url in urls:
         if re.fullmatch(
-            r'http[s]?://{}/{}{}'.format(domain, const.PRODUCT_ROUTES, const.EXTRA_ROUTES), url
+            r'http[s]?://{}(:443)?/{}{}'.format(domain, const.PRODUCT_ROUTES, const.EXTRA_ROUTES), url
         ) is not None:
             product_page_counter['product_page'] = (
                 product_page_counter.get('product_page', 0) + 1
