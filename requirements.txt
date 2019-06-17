@@ -1,4 +1,1 @@
 scrapy
-html2text
-request
-gensim
