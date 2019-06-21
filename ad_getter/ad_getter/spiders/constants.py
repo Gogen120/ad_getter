@@ -59,5 +59,6 @@ NOT_IN_SHOP_KEYWORDS = (
 )
 REVIEW_KEYWORDS = ('написать отзыв', 'добавить отзыв', 'оставить отзыв')
 
-PRODUCT_ROUTES = '(collection|product|catalog|sankt-peterburg|shiny|diski|shop|store|item|model|magazin|products|brendy|vse-tovary|tire|disk|prodazha|goods)'
+PRODUCT_ROUTES = '(collection|product|\w*\-?[ck]atalog|sankt-peterburg|shiny|diski|[e]?shop|store|item|model|magazin|products' \
+    '|brendy|vse-tovary|tire|disk|prodazha|goods|market|ru)'
 EXTRA_ROUTES = '(/[\w\-%\=\.]+/?)+'
